@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { StarRating } from "./star-rating";
+import { StarRating } from "@/components/shared/star-rating";
 
 type Props = { quote: string; name: string; role: string; image: string };
 

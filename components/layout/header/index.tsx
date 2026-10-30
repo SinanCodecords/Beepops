@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import { Container } from "@/components/shared/container";
 import { Logo } from "../logo";
 import { AnnouncementBar } from "./announcement-bar";
 import { HeaderActions } from "./header-actions";
 import { MobileMenu } from "./mobile-menu";
 import { NavLinks } from "./nav-links";
+import { NavList } from "./nav-list";
 
 export function Header() {
   return (
@@ -13,7 +15,9 @@ export function Header() {
         <Container className="flex h-16 items-center gap-6">
           <MobileMenu />
           <Logo />
-          <NavLinks />
+          <Suspense fallback={<NavList pathname="" />}>
+            <NavLinks />
+          </Suspense>
           <HeaderActions />
         </Container>
       </div>
