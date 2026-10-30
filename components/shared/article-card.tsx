@@ -5,7 +5,7 @@ import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
 
 type Props = { date: string; title: string; excerpt: string; image: string; href: string };
 
-export function JournalCard({ date, title, excerpt, image, href }: Props) {
+export function ArticleCard({ date, title, excerpt, image, href }: Props) {
   return (
     <article className="overflow-hidden rounded-[26px] border border-border bg-white shadow-[0_4px_24px_rgba(0,0,0,0.05)]">
       <div className="relative aspect-[412/265] bg-[#f0e5c9]">

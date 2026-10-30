@@ -21,3 +21,21 @@ export const ARTICLES = [
     href: "/blog/natural-vs-added-sugars",
   },
 ];
+
+export const BLOG_HERO = {
+  eyebrow: "Blog",
+  title: "Small stories for better snacking",
+  subtitle: "Snacks made with real ingredients, big flavour, and no nonsense.",
+};
+
+export const BLOG_AUTHOR = {
+  name: "BeePops",
+  email: "hello@beepops.in",
+  bio: "Millet-based protein bars and pure mustard honey. Clean, doctor-led nutrition tailored beautifully for kids, elders, and families.",
+};
+
+export const CATEGORIES = [
+  { label: "BeePops Mini Protein Bar", count: "01" },
+  { label: "From Hive to Home", count: "02" },
+  { label: "Natural vs. Added Sugars: The Sweet Truth", count: "03" },
+];
