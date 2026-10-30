@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // The https tunnel used to test Shopify login locally.
+  allowedDevOrigins: ["*.ngrok-free.app", "*.ngrok-free.dev"],
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

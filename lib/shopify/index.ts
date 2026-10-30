@@ -14,6 +14,7 @@ import type { Product, ShopifyProduct } from "./types";
 export type * from "./types";
 export * from "./helpers";
 export * from "./collections";
+export * from "./customer";
 
 export const CART_COOKIE = "cartId";
 
