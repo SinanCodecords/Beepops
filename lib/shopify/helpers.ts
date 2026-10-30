@@ -1,4 +1,4 @@
-import type { Money } from "./types";
+import type { Money, Product, ShopifyProduct } from "./types";
 
 export function formatPrice({ amount, currencyCode }: Money) {
   return new Intl.NumberFormat("en-IN", {
@@ -30,4 +30,13 @@ export function getCategory(tags: string[], fallback: string) {
 // Descriptions start with a short line like "Box of 6 · Energy & Immunity." used as the card subtitle.
 export function getSubtitle(description: string) {
   return description.split(". ")[0].replace(/\.$/, "");
+}
+
+// Shopify wraps lists in { edges: [{ node }] }; flatten them.
+export function reshapeProduct(product: ShopifyProduct): Product {
+  return {
+    ...product,
+    images: product.images.edges.map((e) => e.node),
+    variants: product.variants.edges.map((e) => e.node),
+  };
 }

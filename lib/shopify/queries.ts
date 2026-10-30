@@ -57,3 +57,18 @@ export const getProductRecommendationsQuery = /* GraphQL */ `
   }
   ${productFragment}
 `;
+
+export const getCollectionProductsQuery = /* GraphQL */ `
+  query getCollectionProducts($handle: String!, $first: Int!) {
+    collection(handle: $handle) {
+      products(first: $first) {
+        edges {
+          node {
+            ...ProductFields
+          }
+        }
+      }
+    }
+  }
+  ${productFragment}
+`;

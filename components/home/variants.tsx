@@ -3,10 +3,10 @@ import Link from "next/link";
 import { Section, SectionHeading } from "@/components/shared/section";
 
 const VARIANTS = [
-  { title: "Protein Bars", image: "/images/variants/protein-bars.webp", href: "/shop?category=millet-protein-bars" },
-  { title: "Honey", image: "/images/variants/honey.webp", href: "/shop?category=himalayan-honey" },
-  { title: "Super Savor Protein", image: "/images/variants/super-savor.webp", href: "/shop" },
-  { title: "Naturals", image: "/images/variants/naturals.webp", href: "/shop" },
+  { title: "Protein Bars", image: "/images/variants/protein-bars.webp", href: "/shop?category=Millet+Protein+Bars" },
+  { title: "Honey", image: "/images/variants/honey.webp", href: "/shop?category=Himalayan+Honey" },
+  { title: "Super Savor Protein", image: "/images/variants/super-savor.webp", href: "/products/super-savor-protein" },
+  { title: "Naturals", image: "/images/variants/naturals.webp", href: "/shop?category=Cookies+%26+Snacks" },
 ];
 
 export function Variants() {

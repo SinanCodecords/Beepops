@@ -4,25 +4,18 @@ import { cacheLife, cacheTag } from "next/cache";
 import { shopifyFetch } from "./client";
 import {
   getCartQuantityQuery,
-  getCollectionsQuery,
   getProductQuery,
   getProductRecommendationsQuery,
   getProductsQuery,
 } from "./queries";
-import type { Collection, Product, ShopifyProduct } from "./types";
+import { reshapeProduct } from "./helpers";
+import type { Product, ShopifyProduct } from "./types";
 
 export type * from "./types";
 export * from "./helpers";
+export * from "./collections";
 
 export const CART_COOKIE = "cartId";
-
-function reshapeProduct(product: ShopifyProduct): Product {
-  return {
-    ...product,
-    images: product.images.edges.map((e) => e.node),
-    variants: product.variants.edges.map((e) => e.node),
-  };
-}
 
 export async function getProducts({
   first = 50,
@@ -55,17 +48,6 @@ export async function getProduct(handle: string): Promise<Product | null> {
     { handle },
   );
   return data.product ? reshapeProduct(data.product) : null;
-}
-
-export async function getCollections(): Promise<Collection[]> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("collections");
-
-  const data = await shopifyFetch<{
-    collections: { edges: { node: Collection }[] };
-  }>(getCollectionsQuery);
-  return data.collections.edges.map((e) => e.node);
 }
 
 // Shopify's own "you may also like" picks for a product.
