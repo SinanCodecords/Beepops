@@ -12,7 +12,7 @@ export const STORE_BADGES = [
   { label: "✓ Deliverable", className: "bg-[#e3f2fd] text-[#1565c0]" },
 ];
 
-// Store tabs: Locations and Reviews pages come later.
+// Store tabs: the Reviews page comes later.
 export const STORE_TABS = [
   { href: "/shop", label: "Shop Products" },
   { href: "/locations", label: "Locations" },
