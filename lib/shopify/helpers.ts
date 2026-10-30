@@ -26,3 +26,8 @@ export const CATEGORY_TAGS = [
 export function getCategory(tags: string[], fallback: string) {
   return tags.find((t) => CATEGORY_TAGS.includes(t)) ?? fallback;
 }
+
+// Descriptions start with a short line like "Box of 6 · Energy & Immunity." used as the card subtitle.
+export function getSubtitle(description: string) {
+  return description.split(". ")[0].replace(/\.$/, "");
+}
