@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BlogPost } from "@/components/blog/post";
+import { BlogPost } from "@/components/blog";
 
 export const metadata: Metadata = {
   title: "BeePops Mini Protein Bar",

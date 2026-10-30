@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ShopExplorer, StoreHeader } from "@/components/shop";
+import { ShopCatalog, StoreHeader } from "@/components/shop";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -10,7 +10,7 @@ export default function ShopPage() {
   return (
     <>
       <StoreHeader />
-      <ShopExplorer />
+      <ShopCatalog />
     </>
   );
 }
