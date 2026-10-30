@@ -11,13 +11,15 @@
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-heading);
   --font-logo: var(--font-logo);
-  --color-forest: #2e4536;
+  --color-forest: #2e4636;
   --color-forest-deep: #263a2d;
-  --color-honey: #fed029;
-  --color-amber: #ffb900;
-  --color-sand: #fae4b7;
-  --color-tangerine: #e8892b;
-  --color-cream: #f8f6f2;
+  --color-honey: #fecf28;
+  --color-amber: #e7a519;
+  --color-sand: #f4ebda;
+  --color-tangerine: #e7a519;
+  --color-cream: #f8f8f8;
+  --color-ink: #241f17;
+  --color-stone: #7c7361;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -58,12 +60,12 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: #1f2a23;
+  --foreground: #241f17;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #2e4536;
+  --primary: #2e4636;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);

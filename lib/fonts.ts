@@ -1,15 +1,15 @@
-import { Anton, DM_Serif_Display, Figtree, Geist_Mono } from "next/font/google";
+import { Boldonse, Fraunces, Geist_Mono, Host_Grotesk } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-// Best guesses from the Figma screenshots; swap once the real fonts are confirmed.
-const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
-const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-heading" });
-const dmSerif = DM_Serif_Display({ subsets: ["latin"], weight: "400", variable: "--font-logo" });
+// Fonts taken from the Figma file.
+const hostGrotesk = Host_Grotesk({ subsets: ["latin"], variable: "--font-sans" });
+const boldonse = Boldonse({ subsets: ["latin"], weight: "400", variable: "--font-heading" });
+const fraunces = Fraunces({ subsets: ["latin"], weight: "700", variable: "--font-logo" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const fontVariables = cn(
-  figtree.variable,
-  anton.variable,
-  dmSerif.variable,
+  hostGrotesk.variable,
+  boldonse.variable,
+  fraunces.variable,
   geistMono.variable,
 );

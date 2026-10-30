@@ -1,10 +1,10 @@
-import { Logo } from "../logo";
+import { FooterLogo } from "../logo";
 import { BADGES } from "./data";
 
 export function FooterBrand() {
   return (
     <div>
-      <Logo className="text-white" />
+      <FooterLogo />
       <p className="mt-4 max-w-xs text-xs leading-relaxed text-white/70">
         Millet-based protein bars and pure mustard honey. Clean, doctor-led nutrition tailored
         beautifully for kids, elders, and families.
