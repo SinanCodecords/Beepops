@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   description: "Millet protein bars, Himalayan honey and clean snacks, handcrafted in Jaipur.",
 };
 
-export default function ShopPage() {
+export default function ShopPage({ searchParams }: PageProps<"/shop">) {
   return (
     <>
       <StoreHeader />
-      <ShopCatalog />
+      <ShopCatalog searchParams={searchParams} />
     </>
   );
 }

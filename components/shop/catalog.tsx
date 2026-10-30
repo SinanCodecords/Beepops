@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/shared/section";
@@ -11,37 +12,69 @@ import {
   type Product,
 } from "@/lib/shopify";
 import { ShopFilters } from "./filters";
+import { parseShopParams, toShopifyQuery, type ShopSearchParams } from "./params";
 
 const CHIPS = ["Jaipur Crafted", "Clean Nutrition"];
 
-// Filters sidebar + product grid.
-export async function ShopCatalog() {
-  const products = await getProducts({ sortKey: "BEST_SELLING" });
-
+// Filters sidebar + product grid. Both read the URL, so they stream in after the static shell.
+export function ShopCatalog({ searchParams }: { searchParams: Promise<ShopSearchParams> }) {
   return (
     <Container className="grid gap-6 py-8 lg:grid-cols-[272px_1fr] lg:items-start lg:py-8 lg:pb-24">
-      <ShopFilters />
-      <div className="min-w-0 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-[15.5px] text-ink">
-            Showing <strong className="font-semibold">{products.length}</strong> signature BeePops
-            products
-          </p>
-          <ul className="flex gap-2">
-            {CHIPS.map((chip) => (
-              <li key={chip} className="rounded-full bg-forest px-3 py-1.5 text-[10.7px] font-semibold text-white">
-                {chip}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <Suspense fallback={<div className="h-12 rounded-xl border border-[#dee2e6] lg:h-[460px]" />}>
+        <ShopFilters />
+      </Suspense>
+      <Suspense fallback={<GridSkeleton />}>
+        <Results searchParams={searchParams} />
+      </Suspense>
+    </Container>
+  );
+}
+
+async function Results({ searchParams }: { searchParams: Promise<ShopSearchParams> }) {
+  const filters = parseShopParams(await searchParams);
+  const products = await getProducts({
+    sortKey: filters.sort.sortKey,
+    reverse: filters.sort.reverse,
+    query: toShopifyQuery(filters),
+  });
+
+  return (
+    <div className="min-w-0 space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[15.5px] text-ink">
+          Showing <strong className="font-semibold">{products.length}</strong> signature BeePops
+          products
+        </p>
+        <ul className="flex gap-2">
+          {CHIPS.map((chip) => (
+            <li key={chip} className="rounded-full bg-forest px-3 py-1.5 text-[10.7px] font-semibold text-white">
+              {chip}
+            </li>
+          ))}
+        </ul>
+      </div>
+      {products.length ? (
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
           {products.map((product, i) => (
             <ShopCard key={product.id} product={product} preload={i < 3} />
           ))}
         </div>
-      </div>
-    </Container>
+      ) : (
+        <p className="rounded-xl border border-dashed border-[#dee2e6] py-16 text-center text-sm text-[#706f6f]">
+          No products match these filters. Try a different category or price range.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function GridSkeleton() {
+  return (
+    <div className="grid gap-5 pt-14 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className="aspect-[288/400] animate-pulse rounded-xl bg-cream" />
+      ))}
+    </div>
   );
 }
 
