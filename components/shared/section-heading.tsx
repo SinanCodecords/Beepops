@@ -1,12 +1,26 @@
-type Props = { eyebrow: string; title: string };
+import { cn } from "@/lib/utils";
+import { Eyebrow } from "./eyebrow";
 
-export function SectionHeading({ eyebrow, title }: Props) {
+type Props = {
+  eyebrow?: string;
+  title: string;
+  align?: "left" | "center";
+  className?: string;
+  titleClassName?: string;
+};
+
+export function SectionHeading({ eyebrow, title, align = "left", className, titleClassName }: Props) {
   return (
-    <div>
-      <p className="text-[11px] font-semibold tracking-[0.2em] text-tangerine uppercase">
-        {eyebrow}
-      </p>
-      <h2 className="mt-2 text-5xl text-forest">{title}</h2>
+    <div className={cn(align === "center" && "text-center", className)}>
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      <h2
+        className={cn(
+          "mt-3 text-[28px] leading-[1.15] text-forest md:text-[40px]",
+          titleClassName,
+        )}
+      >
+        {title}
+      </h2>
     </div>
   );
 }

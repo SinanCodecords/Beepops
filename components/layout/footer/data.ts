@@ -17,7 +17,7 @@ export const EXPLORE_LINKS = [
 
 export const CONTACTS = [
   { href: "mailto:hello@beepops.in", label: "hello@beepops.in", icon: Mail01Icon },
-  { href: "tel:+919557108284", label: "+91 95571 08284", icon: Call02Icon },
+  { href: "tel:+919557106284", label: "+91 95571 06284", icon: Call02Icon },
   { href: null, label: "607 Royal Ensign, C-Scheme, Jaipur 302001", icon: Location01Icon },
 ];
 
