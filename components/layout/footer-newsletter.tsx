@@ -1,5 +1,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Mail01Icon } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
 // Signup is wired up in Step 9.
 export function FooterNewsletter() {
@@ -11,24 +13,18 @@ export function FooterNewsletter() {
       <p className="text-sm text-white/75">
         Get wholesome clean-eating tips, recipes &amp; exclusive product launch offers.
       </p>
-      <div className="mt-5 flex h-12 items-center gap-2 rounded-full border border-white/15 bg-white/5 pr-1 pl-4">
-        <HugeiconsIcon icon={Mail01Icon} size={16} className="shrink-0 text-white/70" />
-        <label htmlFor="newsletter-email" className="sr-only">
-          Email address
-        </label>
-        <input
-          id="newsletter-email"
+      <InputGroup className="mt-5 h-12 border-white/15 bg-white/5 pr-1">
+        <InputGroupAddon>
+          <HugeiconsIcon icon={Mail01Icon} size={16} className="text-white/70" />
+        </InputGroupAddon>
+        <InputGroupInput
           type="email"
+          aria-label="Email address"
           placeholder="Your email address"
-          className="min-w-0 flex-1 bg-transparent text-sm placeholder:text-white/60 focus:outline-none"
+          className="text-white placeholder:text-white/60"
         />
-        <button
-          type="button"
-          className="h-10 rounded-full bg-white px-5 text-sm font-medium text-forest hover:bg-white/90"
-        >
-          Join
-        </button>
-      </div>
+        <Button className="h-10 bg-white px-5 text-forest hover:bg-white/90">Join</Button>
+      </InputGroup>
     </div>
   );
 }

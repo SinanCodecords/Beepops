@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "./data";
 
@@ -43,15 +44,15 @@ export function MobileMenu() {
 
   return (
     <div className="md:hidden">
-      <button
-        type="button"
+      <Button
+        variant="ghost"
+        size="icon"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="flex size-9 items-center justify-center rounded-full hover:bg-muted"
       >
         <HugeiconsIcon icon={open ? Cancel01Icon : Menu01Icon} size={20} />
-      </button>
+      </Button>
       {open && <MobileNav onNavigate={() => setOpen(false)} />}
     </div>
   );

@@ -6,6 +6,9 @@ import {
   Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import { Container } from "@/components/shared/section";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const CONTACTS = [
   { label: "Write Email", value: "hello@beepops.in", href: "mailto:hello@beepops.in", icon: Mail01Icon },
@@ -19,8 +22,7 @@ const QUOTE_FIELDS = [
   { name: "quantity", type: "text", placeholder: "Estimated quantity (e.g. 5,000 units)" },
 ];
 
-const inputClass =
-  "w-full rounded-xl border border-border bg-white px-4 py-3.5 text-[15px] placeholder:text-[#6b6560] focus:border-forest focus:outline-none";
+const fieldClass = "rounded-xl border-border bg-white px-4 text-[15px] md:text-[15px] placeholder:text-[#6b6560]";
 
 export function BulkOrder() {
   return (
@@ -72,25 +74,22 @@ function QuoteForm() {
       <p className="mt-2 text-sm text-[#6b6560]">Queries, pricing &amp; collaborations</p>
       <div className="mt-8 space-y-4">
         {QUOTE_FIELDS.map((f) => (
-          <input key={f.name} aria-label={f.placeholder} {...f} className={inputClass} />
+          <Input key={f.name} aria-label={f.placeholder} {...f} className={`${fieldClass} h-[52px]`} />
         ))}
-        <textarea
+        <Textarea
           name="requirements"
           aria-label="Tell us about your requirements"
           placeholder="Tell us about your requirements"
           rows={4}
-          className={inputClass}
+          className={`${fieldClass} min-h-28 py-3.5`}
         />
       </div>
-      <button
-        type="button"
-        className="mt-8 flex h-14 w-full items-center justify-between rounded-full bg-forest pr-3 pl-6 text-[15px] font-semibold text-white uppercase hover:bg-forest-deep"
-      >
+      <Button className="mt-8 h-14 w-full justify-between pr-3 pl-6 text-[15px] font-semibold uppercase hover:bg-forest-deep">
         Send request
         <span className="flex size-8 items-center justify-center rounded-full bg-white text-forest">
           <HugeiconsIcon icon={ArrowRight02Icon} size={16} />
         </span>
-      </button>
+      </Button>
     </div>
   );
 }

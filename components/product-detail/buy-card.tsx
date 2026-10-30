@@ -1,6 +1,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { DeliveryTruck01Icon, SecurityCheckIcon } from "@hugeicons/core-free-icons";
 import { StarRating } from "@/components/shared/star-rating";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PurchaseOptions, QuantitySelector } from "./buy-controls";
 import { PRODUCT } from "./data";
@@ -48,18 +49,15 @@ export function BuyCard() {
       <div className="mt-7">
         <QuantitySelector />
         <div className="mt-3 grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            className="h-[51px] rounded-xl bg-amber text-[15px] font-bold text-ink uppercase transition-colors hover:bg-honey"
-          >
+          <Button className="h-[51px] rounded-xl bg-amber text-[15px] font-bold text-ink uppercase hover:bg-honey">
             Subscribe now
-          </button>
-          <button
-            type="button"
-            className="h-[51px] rounded-xl border border-forest bg-white text-[15px] font-bold text-forest uppercase transition-colors hover:bg-forest hover:text-white"
+          </Button>
+          <Button
+            variant="outline"
+            className="h-[51px] rounded-xl border-forest bg-white text-[15px] font-bold text-forest uppercase hover:bg-forest hover:text-white"
           >
             Add to cart
-          </button>
+          </Button>
         </div>
       </div>
       <ul className="mt-3 space-y-2.5 border-t border-[#e5e2d9] pt-4 text-[12.5px] text-[#706f6f]">

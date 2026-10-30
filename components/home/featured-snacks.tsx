@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { StarIcon } from "@hugeicons/core-free-icons";
 import { Section, SectionHeading } from "@/components/shared/section";
+import { Button } from "@/components/ui/button";
 
 type Snack = (typeof SNACKS)[number];
 
@@ -95,12 +96,9 @@ function SnackCard({ snack }: { snack: Snack }) {
             <span className="text-[15px] font-bold text-ink">{snack.price}</span>
             <span className="text-sm font-bold text-[#9b9e9e] line-through">{snack.compareAt}</span>
           </p>
-          <button
-            type="button"
-            className="h-7 w-[105px] rounded-full bg-forest text-[11px] font-medium text-white hover:bg-forest-deep"
-          >
+          <Button size="xs" className="h-7 w-[105px] text-[11px] hover:bg-forest-deep">
             Add
-          </button>
+          </Button>
         </div>
       </div>
     </article>

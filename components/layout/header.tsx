@@ -10,6 +10,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { CART_COOKIE, getCartQuantity } from "@/lib/shopify";
 import { Container } from "@/components/shared/section";
+import { Button } from "@/components/ui/button";
 import { ANNOUNCEMENT } from "./data";
 import { DesktopNav, MobileMenu, NavLinks } from "./header-nav";
 import { Logo } from "./logo";
@@ -29,13 +30,13 @@ export function Header() {
           </Suspense>
           <div className="ml-auto flex items-center gap-1 md:gap-3">
             {/* Location picker is a design placeholder for now. */}
-            <button
-              type="button"
-              className="hidden h-9 w-64 items-center gap-2 rounded-full bg-muted px-3 text-xs font-medium text-foreground/80 lg:flex"
+            <Button
+              variant="ghost"
+              className="hidden w-64 justify-start gap-2 bg-muted px-3 text-xs text-foreground/80 lg:flex"
             >
               <HugeiconsIcon icon={Location01Icon} size={16} />
               Select Location
-            </button>
+            </Button>
             <IconLink href="/shop" label="Search products" icon={Search01Icon} />
             <IconLink href="/account" label="My account" icon={UserIcon} />
             <BagLink />

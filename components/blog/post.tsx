@@ -9,12 +9,15 @@ import {
   Share08Icon,
 } from "@hugeicons/core-free-icons";
 import { Container } from "@/components/shared/section";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { POST, POST_BODY } from "./data";
 import { BlogSidebar } from "./sidebar";
 
-const iconButton = "flex items-center gap-1.5 text-[15px] font-medium text-[#101010] hover:text-forest";
+const iconButton = "h-auto gap-1.5 p-0 text-[15px] text-[#101010] hover:bg-transparent hover:text-forest";
 const field =
-  "w-full rounded-sm border border-[#e2e8f0] px-3.5 text-[15px] font-medium text-ink outline-none placeholder:text-[#8a94a6] focus:border-forest";
+  "rounded-sm border-[#e2e8f0] bg-white px-3.5 text-[15px] md:text-[15px] font-medium text-ink placeholder:text-[#8a94a6]";
 
 export function BlogPost() {
   return (
@@ -43,16 +46,16 @@ export function BlogPost() {
           <div className="mt-6 flex items-center justify-between gap-4">
             {/* Visual only for now: likes, saving and sharing get wired up later. */}
             <div className="flex items-center gap-4">
-              <button type="button" aria-label="Like this post" className={iconButton}>
+              <Button variant="ghost" aria-label="Like this post" className={iconButton}>
                 <HugeiconsIcon icon={FavouriteIcon} size={18} />
                 {POST.likes}
-              </button>
-              <button type="button" aria-label="Save this post" className={iconButton}>
+              </Button>
+              <Button variant="ghost" aria-label="Save this post" className={iconButton}>
                 <HugeiconsIcon icon={Bookmark02Icon} size={18} />
-              </button>
-              <button type="button" aria-label="Share this post" className={iconButton}>
+              </Button>
+              <Button variant="ghost" aria-label="Share this post" className={iconButton}>
                 <HugeiconsIcon icon={Share08Icon} size={18} />
-              </button>
+              </Button>
             </div>
             <time className="text-[15px] text-[#101010]">{POST.date}</time>
           </div>
@@ -96,20 +99,17 @@ function CommentForm() {
         Leave A Comment
       </h2>
       <form className="mt-5 space-y-5">
-        <textarea aria-label="Comment" placeholder="Comment.." rows={5} className={`${field} py-3.5`} />
+        <Textarea aria-label="Comment" placeholder="Comment.." rows={5} className={`${field} min-h-32 py-3.5`} />
         <div className="grid gap-4 sm:grid-cols-2">
-          <input aria-label="Name" placeholder="Name (required)" required className={`${field} h-[42px]`} />
-          <input type="email" aria-label="Email" placeholder="Email (required)" required className={`${field} h-[42px]`} />
+          <Input aria-label="Name" placeholder="Name (required)" required className={`${field} h-[42px]`} />
+          <Input type="email" aria-label="Email" placeholder="Email (required)" required className={`${field} h-[42px]`} />
         </div>
-        <button
-          type="button"
-          className="inline-flex h-[42px] items-center gap-3 rounded-full bg-forest pr-1.5 pl-3.5 text-[13px] font-bold text-white uppercase transition-colors hover:bg-forest-deep"
-        >
+        <Button className="h-[42px] gap-3 pr-1.5 pl-3.5 text-[13px] font-bold uppercase hover:bg-forest-deep">
           Post comment
           <span className="flex size-7 items-center justify-center rounded-full bg-white text-forest">
             <HugeiconsIcon icon={ArrowRight02Icon} size={14} />
           </span>
-        </button>
+        </Button>
       </form>
     </section>
   );

@@ -1,12 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowRight01Icon,
-  CheckmarkBadge01Icon,
-  DeliveryTruck01Icon,
-} from "@hugeicons/core-free-icons";
+import { CheckmarkBadge01Icon, DeliveryTruck01Icon } from "@hugeicons/core-free-icons";
 import { Container } from "@/components/shared/section";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { CartSummary } from "./cart-summary";
 import { QuantityStepper } from "./quantity-stepper";
 
@@ -27,19 +31,19 @@ const ITEMS = [
 export function CartPage() {
   return (
     <Container className="py-10 md:py-16">
-      <nav aria-label="Breadcrumb" className="text-sm md:text-lg">
-        <ol className="flex items-center gap-2 font-medium">
-          <li className="flex items-center gap-2 text-[#706f6f]">
-            <Link href="/" className="hover:text-ink">
+      <Breadcrumb>
+        <BreadcrumbList className="gap-2 text-sm font-medium text-[#706f6f] sm:gap-2 md:text-lg">
+          <BreadcrumbItem>
+            <BreadcrumbLink render={<Link href="/" />} className="hover:text-ink">
               Home
-            </Link>
-            <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
-          </li>
-          <li aria-current="page" className="font-semibold text-forest">
-            Your Shopping Cart
-          </li>
-        </ol>
-      </nav>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="font-semibold text-forest">Your Shopping Cart</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <h1 className="mt-6 text-[28px] leading-tight text-forest md:mt-7 md:text-[38px]">
         Shopping Cart
       </h1>

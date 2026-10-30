@@ -1,5 +1,8 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 // Design stage: static totals. Replaced by the Shopify cart later.
 const SUMMARY_ROWS = [
@@ -12,22 +15,19 @@ export function CartSummary() {
   return (
     <aside className="flex flex-col gap-5 lg:sticky lg:top-6">
       <form className="rounded-xl border border-border bg-white p-5">
-        <label htmlFor="coupon" className="text-xs font-bold tracking-wide text-stone uppercase">
+        <Label htmlFor="coupon" className="text-xs font-bold tracking-wide text-stone uppercase">
           Have a coupon code?
-        </label>
+        </Label>
         <div className="mt-3 flex gap-2">
-          <input
+          <Input
             id="coupon"
             name="coupon"
             placeholder="Enter coupon code (e.g. ABOVE2000)"
-            className="h-11 min-w-0 flex-1 rounded-lg border border-border px-4 text-[13px] text-ink outline-none placeholder:text-stone focus:border-forest"
+            className="h-11 flex-1 rounded-lg border-border bg-white px-4 text-[13px] md:text-[13px] text-ink placeholder:text-stone"
           />
-          <button
-            type="button"
-            className="h-11 rounded-lg bg-forest px-5 text-[13px] font-bold text-white uppercase hover:bg-forest-deep"
-          >
+          <Button className="h-11 rounded-lg px-5 text-[13px] font-bold uppercase hover:bg-forest-deep">
             Apply
-          </button>
+          </Button>
         </div>
       </form>
       <section className="rounded-xl border border-border bg-white p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)]">
@@ -47,15 +47,12 @@ export function CartSummary() {
           <span className="text-[22px] font-bold text-forest">{TOTAL}</span>
         </div>
         {/* Design stage: will send the shopper to Shopify checkout later. */}
-        <button
-          type="button"
-          className="flex h-[58px] w-full items-center justify-between rounded-full bg-forest pr-3 pl-5 text-[15px] font-semibold text-white uppercase transition-colors hover:bg-forest-deep"
-        >
+        <Button className="h-[58px] w-full justify-between pr-3 pl-5 text-[15px] font-semibold uppercase hover:bg-forest-deep">
           Place Order
           <span className="flex size-8 items-center justify-center rounded-full bg-white text-ink">
             <HugeiconsIcon icon={ArrowRight02Icon} size={16} />
           </span>
-        </button>
+        </Button>
       </section>
     </aside>
   );

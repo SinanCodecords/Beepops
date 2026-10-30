@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { StarIcon } from "@hugeicons/core-free-icons";
 import { Container } from "@/components/shared/section";
+import { Button } from "@/components/ui/button";
 import { ShopFilters } from "./filters";
 
 type ShopProduct = ReturnType<typeof p>;
@@ -95,12 +96,9 @@ function ShopCard({ product, preload }: { product: ShopProduct; preload?: boolea
           <span className="text-[17.5px] font-extrabold text-ink">{product.price}</span>
           <span className="text-xs text-[#706f6f] line-through">{product.compareAt}</span>
         </p>
-        <button
-          type="button"
-          className="h-8 shrink-0 rounded-full bg-forest px-4 text-xs font-bold text-white transition-colors hover:bg-forest-deep"
-        >
+        <Button size="sm" className="px-4 text-xs font-bold hover:bg-forest-deep">
           Add To Bag
-        </button>
+        </Button>
       </div>
     </article>
   );

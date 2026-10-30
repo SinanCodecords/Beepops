@@ -2,6 +2,7 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Add01Icon, ArrowRight02Icon, MinusSignIcon } from "@hugeicons/core-free-icons";
 import { Container } from "@/components/shared/section";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 // Only the first answer is in the Figma file; the rest are placeholders to confirm.
 const FAQS = [
@@ -40,24 +41,24 @@ export function Faq() {
           </p>
         </div>
         <div className="space-y-3">
-          {FAQS.map(({ q, a }, i) => (
-            // Native <details>: works without JavaScript; `name` keeps only one open at a time.
-            <details
-              key={q}
-              name="faq"
-              open={i === 0}
-              className="group rounded-xl border border-white/25 px-6 py-5"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-white [&::-webkit-details-marker]:hidden">
-                {q}
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white text-forest">
-                  <HugeiconsIcon icon={Add01Icon} size={16} className="group-open:hidden" />
-                  <HugeiconsIcon icon={MinusSignIcon} size={16} className="hidden group-open:block" />
-                </span>
-              </summary>
-              <p className="mt-3 pr-10 text-sm leading-relaxed text-[#f3f3f3]">{a}</p>
-            </details>
-          ))}
+          <Accordion defaultValue={[FAQS[0].q]} className="gap-3 overflow-visible rounded-none border-0">
+            {FAQS.map(({ q, a }) => (
+              <AccordionItem
+                key={q}
+                value={q}
+                className="rounded-xl border border-white/25 px-2 data-open:bg-transparent"
+              >
+                <AccordionTrigger className="group items-center px-4 py-5 font-sans text-lg font-medium tracking-normal text-white normal-case hover:no-underline **:data-[slot=accordion-trigger-icon]:hidden">
+                  {q}
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white text-forest">
+                    <HugeiconsIcon icon={Add01Icon} size={16} className="group-aria-expanded:hidden" />
+                    <HugeiconsIcon icon={MinusSignIcon} size={16} className="hidden group-aria-expanded:block" />
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="pr-10 pb-5 leading-relaxed text-[#f3f3f3]">{a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
           <div className="flex flex-col gap-4 rounded-xl border border-white/25 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-lg font-medium text-white">Still have a question in mind?</p>
