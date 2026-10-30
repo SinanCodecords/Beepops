@@ -6,6 +6,7 @@ import {
   getCartQuantityQuery,
   getCollectionsQuery,
   getProductQuery,
+  getProductRecommendationsQuery,
   getProductsQuery,
 } from "./queries";
 import type { Collection, Product, ShopifyProduct } from "./types";
@@ -65,6 +66,19 @@ export async function getCollections(): Promise<Collection[]> {
     collections: { edges: { node: Collection }[] };
   }>(getCollectionsQuery);
   return data.collections.edges.map((e) => e.node);
+}
+
+// Shopify's own "you may also like" picks for a product.
+export async function getProductRecommendations(productId: string): Promise<Product[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("products");
+
+  const data = await shopifyFetch<{ productRecommendations: ShopifyProduct[] | null }>(
+    getProductRecommendationsQuery,
+    { productId },
+  );
+  return (data.productRecommendations ?? []).map(reshapeProduct);
 }
 
 /** Not cached: a cart changes on every add or remove. */

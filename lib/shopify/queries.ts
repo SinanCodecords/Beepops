@@ -48,3 +48,12 @@ export const getCartQuantityQuery = /* GraphQL */ `
     }
   }
 `;
+
+export const getProductRecommendationsQuery = /* GraphQL */ `
+  query getProductRecommendations($productId: ID!) {
+    productRecommendations(productId: $productId) {
+      ...ProductFields
+    }
+  }
+  ${productFragment}
+`;
