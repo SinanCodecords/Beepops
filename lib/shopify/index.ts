@@ -11,6 +11,8 @@ import {
 import type { Collection, Product, ShopifyProduct } from "./types";
 
 export type * from "./types";
+export * from "./categories";
+export * from "./format";
 
 export const CART_COOKIE = "cartId";
 
@@ -73,12 +75,4 @@ export async function getCartQuantity(cartId: string): Promise<number> {
     { id: cartId },
   );
   return data.cart?.totalQuantity ?? 0;
-}
-
-export function formatPrice({ amount, currencyCode }: { amount: string; currencyCode: string }) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: currencyCode,
-    maximumFractionDigits: 0,
-  }).format(Number(amount));
 }

@@ -6,39 +6,7 @@ import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
-
-export const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/shop", label: "Shop" },
-  { href: "/blog", label: "Blog" },
-];
-
-function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
-}
-
-export function NavLinks() {
-  const pathname = usePathname();
-  return (
-    <nav className="hidden items-center gap-7 md:flex">
-      {NAV_LINKS.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={cn(
-            "text-xs font-semibold tracking-wide uppercase transition-colors",
-            isActive(pathname, link.href)
-              ? "text-foreground"
-              : "text-muted-foreground hover:text-foreground",
-          )}
-        >
-          {link.label}
-        </Link>
-      ))}
-    </nav>
-  );
-}
+import { NAV_LINKS, isActive } from "./data";
 
 export function MobileMenu() {
   const pathname = usePathname();
