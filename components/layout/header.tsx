@@ -8,10 +8,11 @@ import {
   ShoppingBag01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
-import { CART_COOKIE, getCartQuantity } from "@/lib/shopify";
+import { CART_COOKIE, getCartQuantity, isLoggedIn } from "@/lib/shopify";
 import { Container } from "@/components/shared/section";
 import { Button } from "@/components/ui/button";
 import { ANNOUNCEMENT } from "./data";
+import { AccountMenu } from "./account-menu";
 import { DesktopNav, MobileMenu, NavLinks } from "./header-nav";
 import { Logo } from "./logo";
 
@@ -38,7 +39,9 @@ export function Header() {
               Select Location
             </Button>
             <IconLink href="/shop" label="Search products" icon={Search01Icon} />
-            <IconLink href="/account" label="My account" icon={UserIcon} />
+            <Suspense fallback={<LoginLink />}>
+              <AccountButton />
+            </Suspense>
             <BagLink />
           </div>
         </Container>
@@ -57,6 +60,23 @@ function IconLink({ href, label, icon }: { href: string; label: string; icon: Ic
       <HugeiconsIcon icon={icon} size={18} />
     </Link>
   );
+}
+
+// Guests go straight to Shopify's login page; a route handler, so a plain <a>.
+function LoginLink() {
+  return (
+    <a
+      href="/account/login"
+      aria-label="Log in"
+      className="flex size-9 items-center justify-center rounded-full hover:bg-muted"
+    >
+      <HugeiconsIcon icon={UserIcon} size={18} />
+    </a>
+  );
+}
+
+async function AccountButton() {
+  return (await isLoggedIn()) ? <AccountMenu /> : <LoginLink />;
 }
 
 function BagLink() {
