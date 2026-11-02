@@ -45,6 +45,11 @@ const customerQuery = /* GraphQL */ `
   }
 `;
 
+/** The logged-in customer's token, used to link the cart to their account. */
+export async function getCustomerAccessToken() {
+  return (await readSession())?.accessToken ?? null;
+}
+
 /** True when a login cookie is present (the proxy already refreshed it if needed). */
 export async function isLoggedIn() {
   return Boolean(await readSession());

@@ -2,7 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { CheckmarkBadge01Icon, DeliveryTruck01Icon } from "@hugeicons/core-free-icons";
+import { Suspense } from "react";
+import { ArrowButton } from "@/components/shared/arrow-button";
 import { Container } from "@/components/shared/section";
+import { formatPrice, getCart, type Cart } from "@/lib/shopify";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,21 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { CartSummary } from "./cart-summary";
-import { QuantityStepper } from "./quantity-stepper";
-
-// Design stage: static bag contents. Replaced by the Shopify cart later.
-const ITEMS = [
-  {
-    id: "honey-sticks-50",
-    title: "BeePops Honey Sticks | Box Of 50 | Pure Himalayan Honey",
-    variant: "Box of 50 Sticks · Pure Raw Wild Mustard Honey",
-    delivery: "Wednesday, 03 Sept",
-    image: "/images/products/himalayan-honey.webp",
-    href: "/products/himalayan-honey",
-    quantity: 1,
-    total: "₹180",
-  },
-];
+import { LineControls } from "./cart-controls";
 
 export function CartPage() {
   return (
@@ -47,15 +36,39 @@ export function CartPage() {
       <h1 className="mt-6 text-[28px] leading-tight text-forest md:mt-7 md:text-[38px]">
         Shopping Cart
       </h1>
-      <div className="mt-7 grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_420px]">
-        <CartItems />
-        <CartSummary />
-      </div>
+      <Suspense fallback={<p className="mt-7 text-sm text-stone">Loading your bag…</p>}>
+        <CartContents />
+      </Suspense>
     </Container>
   );
 }
 
-function CartItems() {
+// Reads the cart cookie, so it streams in after the static heading.
+async function CartContents() {
+  const cart = await getCart().catch(() => null);
+  if (!cart || cart.lines.nodes.length === 0) return <EmptyCart />;
+
+  return (
+    <div className="mt-7 grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_420px]">
+      <CartItems cart={cart} />
+      <CartSummary cart={cart} />
+    </div>
+  );
+}
+
+function EmptyCart() {
+  return (
+    <div className="mt-7 rounded-xl border border-border bg-white px-6 py-16 text-center">
+      <p className="text-lg font-bold text-ink">Your bag is empty</p>
+      <p className="mt-2 text-sm text-stone">Add some millet bars or honey and they&apos;ll show up here.</p>
+      <ArrowButton href="/shop" className="mt-6">
+        Start shopping
+      </ArrowButton>
+    </div>
+  );
+}
+
+function CartItems({ cart }: { cart: Cart }) {
   return (
     <section aria-label="Items in your bag" className="overflow-hidden rounded-xl border border-border bg-white">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-5">
@@ -65,32 +78,44 @@ function CartItems() {
         </span>
       </div>
       <ul>
-        {ITEMS.map((item) => (
-          <li key={item.id} className="flex gap-4 border-b border-border p-4 md:gap-6 md:px-6 md:py-6">
-            <div className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-[#f5f1e8] md:size-[110px]">
-              <Image src={item.image} alt={item.title} fill sizes="110px" className="object-contain" />
-            </div>
-            <div className="flex flex-1 flex-col justify-between gap-4 sm:flex-row sm:items-center">
-              <div className="max-w-[300px]">
-                <Link href={item.href} className="text-sm font-bold text-ink hover:underline md:text-base">
-                  {item.title}
-                </Link>
-                <p className="mt-1.5 text-xs font-medium text-stone">{item.variant}</p>
-                <p className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-forest">
-                  <HugeiconsIcon icon={DeliveryTruck01Icon} size={14} />
-                  Delivery by: {item.delivery}
-                </p>
+        {cart.lines.nodes.map((line) => {
+          const { merchandise } = line;
+          const image = merchandise.image ?? merchandise.product.featuredImage;
+          const href = `/products/${merchandise.product.handle}`;
+          return (
+            <li key={line.id} className="flex gap-4 border-b border-border p-4 md:gap-6 md:px-6 md:py-6">
+              <Link
+                href={href}
+                className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-[#f5f1e8] md:size-[110px]"
+              >
+                {image && (
+                  <Image src={image.url} alt={image.altText ?? merchandise.product.title} fill sizes="110px" className="object-contain" />
+                )}
+              </Link>
+              <div className="flex flex-1 flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                <div className="max-w-[300px]">
+                  <Link href={href} className="text-sm font-bold text-ink hover:underline md:text-base">
+                    {merchandise.product.title}
+                  </Link>
+                  {merchandise.title !== "Default Title" && (
+                    <p className="mt-1.5 text-xs font-medium text-stone">{merchandise.title}</p>
+                  )}
+                  <p className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-forest">
+                    <HugeiconsIcon icon={DeliveryTruck01Icon} size={14} />
+                    Delivery date shown at checkout
+                  </p>
+                </div>
+                <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-end">
+                  <p className="sm:text-right">
+                    <span className="block text-xs font-medium text-stone">Total</span>
+                    <span className="text-base font-bold text-forest">{formatPrice(line.cost.totalAmount)}</span>
+                  </p>
+                  <LineControls lineId={line.id} quantity={line.quantity} />
+                </div>
               </div>
-              <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-end">
-                <p className="sm:text-right">
-                  <span className="block text-xs font-medium text-stone">Total</span>
-                  <span className="text-base font-bold text-forest">{item.total}</span>
-                </p>
-                <QuantityStepper initial={item.quantity} />
-              </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
       <p className="flex items-start gap-2 bg-honey/10 px-4 py-4 text-xs font-medium text-ink">
         <HugeiconsIcon icon={CheckmarkBadge01Icon} size={18} className="shrink-0 text-amber" />

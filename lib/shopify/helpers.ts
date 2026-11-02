@@ -40,3 +40,11 @@ export function reshapeProduct(product: ShopifyProduct): Product {
     variants: product.variants.edges.map((e) => e.node),
   };
 }
+
+/** The variant a product card adds to the bag: the cheapest one in stock (matches the "from" price). */
+export function defaultVariant(product: Product) {
+  const inStock = product.variants.filter((v) => v.availableForSale);
+  return [...(inStock.length ? inStock : product.variants)].sort(
+    (a, b) => Number(a.price.amount) - Number(b.price.amount),
+  )[0];
+}

@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { MinusSignIcon, PlusSignIcon } from "@hugeicons/core-free-icons";
+import { buyNow } from "@/components/cart/actions";
+import { AddToBagButton } from "@/components/shared/add-to-bag-button";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -15,6 +17,8 @@ export function BuyControls({ variants }: { variants: ProductVariant[] }) {
     (variants.find((v) => v.availableForSale) ?? variants[0]).id,
   );
   const [quantity, setQuantity] = useState(1);
+  const [buying, startBuying] = useTransition();
+  const [error, setError] = useState<string>();
   const variant = variants.find((v) => v.id === variantId) ?? variants[0];
   const discount = discountPercent(variant.price, variant.compareAtPrice);
 
@@ -87,19 +91,28 @@ export function BuyControls({ variants }: { variants: ProductVariant[] }) {
         </div>
         <div className="mt-3 grid grid-cols-2 gap-3">
           <Button
-            disabled={!variant.availableForSale}
+            disabled={!variant.availableForSale || buying}
+            onClick={() =>
+              startBuying(async () => {
+                const result = await buyNow(variant.id, quantity);
+                if (result?.error) setError(result.error);
+              })
+            }
             className="h-[51px] rounded-xl bg-amber text-[15px] font-bold text-ink uppercase hover:bg-honey"
           >
-            {variant.availableForSale ? "Buy now" : "Sold out"}
+            {!variant.availableForSale ? "Sold out" : buying ? "Please wait…" : "Buy now"}
           </Button>
-          <Button
+          <AddToBagButton
+            variantId={variant.id}
+            quantity={quantity}
             variant="outline"
             disabled={!variant.availableForSale}
             className="h-[51px] rounded-xl border-forest bg-white text-[15px] font-bold text-forest uppercase hover:bg-forest hover:text-white"
           >
             Add to cart
-          </Button>
+          </AddToBagButton>
         </div>
+        {error && <p className="mt-2 text-xs text-destructive">{error}</p>}
       </div>
     </>
   );

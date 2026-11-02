@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Section, SectionHeading } from "@/components/shared/section";
+import { AddToBagButton } from "@/components/shared/add-to-bag-button";
 import { Button } from "@/components/ui/button";
 import {
+  defaultVariant,
   discountPercent,
   formatPrice,
   getCategory,
@@ -74,9 +76,19 @@ function SnackCard({ product }: { product: Product }) {
               <span className="text-sm font-bold text-[#9b9e9e] line-through">{formatPrice(compareAt)}</span>
             )}
           </p>
-          <Button size="xs" disabled={!product.availableForSale} className="h-7 w-[105px] text-[11px] hover:bg-forest-deep">
-            {product.availableForSale ? "Add" : "Sold out"}
-          </Button>
+          {product.availableForSale ? (
+            <AddToBagButton
+              variantId={defaultVariant(product).id}
+              size="xs"
+              className="h-7 w-[105px] text-[11px] hover:bg-forest-deep"
+            >
+              Add
+            </AddToBagButton>
+          ) : (
+            <Button size="xs" disabled className="h-7 w-[105px] text-[11px]">
+              Sold out
+            </Button>
+          )}
         </div>
       </div>
     </article>

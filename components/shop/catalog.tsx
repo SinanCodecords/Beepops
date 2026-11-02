@@ -2,8 +2,10 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/shared/section";
+import { AddToBagButton } from "@/components/shared/add-to-bag-button";
 import { Button } from "@/components/ui/button";
 import {
+  defaultVariant,
   discountPercent,
   formatPrice,
   getCategory,
@@ -124,9 +126,19 @@ function ShopCard({ product, preload }: { product: Product; preload?: boolean })
             <span className="text-xs text-[#706f6f] line-through">{formatPrice(compareAt)}</span>
           )}
         </p>
-        <Button size="sm" className="px-4 text-xs font-bold hover:bg-forest-deep" disabled={!product.availableForSale}>
-          {product.availableForSale ? "Add To Bag" : "Sold Out"}
-        </Button>
+        {product.availableForSale ? (
+          <AddToBagButton
+            variantId={defaultVariant(product).id}
+            size="sm"
+            className="px-4 text-xs font-bold hover:bg-forest-deep"
+          >
+            Add To Bag
+          </AddToBagButton>
+        ) : (
+          <Button size="sm" className="px-4 text-xs font-bold" disabled>
+            Sold Out
+          </Button>
+        )}
       </div>
     </article>
   );
